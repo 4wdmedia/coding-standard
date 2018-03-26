@@ -23,6 +23,7 @@ For loops that have only a second expression (the condition) should be converted
 </td>
    </tr>
   </table>
+
 ## Jumbled Incrementers
 Incrementers in nested loops should use different variable names.
   <table>
@@ -49,6 +50,7 @@ Incrementers in nested loops should use different variable names.
 </td>
    </tr>
   </table>
+
 ## Unnecessary Final Modifiers
 Methods should not be declared final inside of classes that are declared final.
   <table>
@@ -79,6 +81,7 @@ Methods should not be declared final inside of classes that are declared final.
 </td>
    </tr>
   </table>
+
 ## Useless Overriding Methods
 Methods should not be defined that only call the parent method.
   <table>
@@ -112,6 +115,7 @@ Methods should not be defined that only call the parent method.
 </td>
    </tr>
   </table>
+
 ## Todo Comments
 FIXME Statements should be taken care of.
   <table>
@@ -138,6 +142,7 @@ FIXME Statements should be taken care of.
 </td>
    </tr>
   </table>
+
 ## Todo Comments
 TODO Statements should be taken care of.
   <table>
@@ -164,6 +169,7 @@ TODO Statements should be taken care of.
 </td>
    </tr>
   </table>
+
 ## Inline Control Structures
 Control Structures should use braces.
   <table>
@@ -187,6 +193,7 @@ Control Structures should use braces.
 </td>
    </tr>
   </table>
+
 ## Byte Order Marks
 Byte Order Marks that may corrupt your application should not be used.  These include 0xefbbbf (UTF-8), 0xfeff (UTF-16 BE) and 0xfffe (UTF-16 LE).
 ## Inline HTML
@@ -214,6 +221,7 @@ Files that contain php code should only have php code and should not have any &q
 </td>
    </tr>
   </table>
+
 ## Line Endings
 Unix-style line endings are preferred (&quot;\n&quot; instead of &quot;\r\n&quot;).
 ## One Class Per File
@@ -246,6 +254,7 @@ There should only be one class defined in a file.
 </td>
    </tr>
   </table>
+
 ## One Interface Per File
 There should only be one interface defined in a file.
   <table>
@@ -276,6 +285,7 @@ There should only be one interface defined in a file.
 </td>
    </tr>
   </table>
+
 ## Multiple Statements On a Single Line
 Multiple statements are not allowed on a single line.
   <table>
@@ -297,6 +307,7 @@ Multiple statements are not allowed on a single line.
 </td>
    </tr>
   </table>
+
 ## Space After Casts
 Spaces are not allowed after casting operators.
   <table>
@@ -317,6 +328,7 @@ Spaces are not allowed after casting operators.
 </td>
    </tr>
   </table>
+
 ## Call-Time Pass-By-Reference
 Call-time pass-by-reference is not allowed. It should be declared in the function definition.
   <table>
@@ -349,6 +361,7 @@ Call-time pass-by-reference is not allowed. It should be declared in the functio
 </td>
    </tr>
   </table>
+
 ## Function Argument Spacing
 Function arguments should have one space after a comma, and single spaces surrounding the equals sign for default values.
   <table>
@@ -395,6 +408,7 @@ Function arguments should have one space after a comma, and single spaces surrou
 </td>
    </tr>
   </table>
+
 ## Opening Brace in Function Declarations
 Function declarations follow the &quot;Kernighan/Ritchie style&quot;. The function brace is on the same line as the function declaration. One space is required between the closing parenthesis and the brace.
   <table>
@@ -420,6 +434,7 @@ Function declarations follow the &quot;Kernighan/Ritchie style&quot;. The functi
 </td>
    </tr>
   </table>
+
 ## Constructor name
 Constructors should be named __construct, not after the class.
   <table>
@@ -450,6 +465,7 @@ Constructors should be named __construct, not after the class.
 </td>
    </tr>
   </table>
+
 ## Constant Names
 Constants should always be all-uppercase, with underscores to separate words.
   <table>
@@ -480,6 +496,7 @@ Constants should always be all-uppercase, with underscores to separate words.
 </td>
    </tr>
   </table>
+
 ## Opening Tag at Start of File
 The opening php tag should be the first item in the file.
   <table>
@@ -503,6 +520,7 @@ The opening php tag should be the first item in the file.
 </td>
    </tr>
   </table>
+
 ## Deprecated Functions
 Deprecated functions should not be used.
   <table>
@@ -523,6 +541,7 @@ Deprecated functions should not be used.
 </td>
    </tr>
   </table>
+
 ## PHP Code Tags
 Always use &lt;?php ?&gt; to delimit PHP code, not the &lt;? ?&gt; shorthand. This is the most portable way to include PHP code on differing operating systems and setups.
 ## Forbidden Functions
@@ -545,6 +564,7 @@ The forbidden functions sizeof() and delete() should not be used.
 </td>
    </tr>
   </table>
+
 ## Lowercase Keywords
 All PHP keywords should be lowercase.
   <table>
@@ -565,6 +585,7 @@ All PHP keywords should be lowercase.
 </td>
    </tr>
   </table>
+
 ## No Space Indentation
 Tabs should be used for indentation instead of spaces.
 ## Control Structure Signatures
@@ -610,6 +631,7 @@ Control structures should use one space around the parentheses in conditions.  T
 </td>
    </tr>
   </table>
+
 ## Default Values in Function Declarations
 Arguments with default values go at the end of the argument list.
   <table>
@@ -636,6 +658,7 @@ Arguments with default values go at the end of the argument list.
 </td>
    </tr>
   </table>
+
 ## Class Declaration
 Each class must be in a file by itself and must be under a namespace (a top-level vendor name).
   <table>
@@ -691,6 +714,7 @@ Each class must be in a file by itself and must be under a namespace (a top-leve
 </td>
    </tr>
   </table>
+
 ## Namespace Declarations
 There must be one blank line after the namespace declaration.
   <table>
@@ -714,6 +738,7 @@ There must be one blank line after the namespace declaration.
 </td>
    </tr>
   </table>
+
 ## Namespace Declarations
 Each use declaration must contain only one namespace and must come after the first namespace declaration.  There should be one blank line after the final use statement.
   <table>
@@ -784,6 +809,7 @@ Each use declaration must contain only one namespace and must come after the fir
 </td>
    </tr>
   </table>
+
 ## Closing PHP Tags
 Files should not have closing php tags.
   <table>
@@ -807,6 +833,7 @@ Files should not have closing php tags.
 </td>
    </tr>
   </table>
+
 ## Array Bracket Spacing
 When referencing arrays you should not put whitespace around the opening bracket or before the closing bracket.
   <table>
@@ -827,6 +854,7 @@ When referencing arrays you should not put whitespace around the opening bracket
 </td>
    </tr>
   </table>
+
 ## Lowercase Class Keywords
 The php keywords class, interface, trait, extends, implements, abstract, final, var, and const should be lowercase.
   <table>
@@ -851,6 +879,7 @@ The php keywords class, interface, trait, extends, implements, abstract, final, 
 </td>
    </tr>
   </table>
+
 ## Self Member Reference
 The self keyword should be used instead of the current class name, should be lowercase, and should not have spaces before or after it.
   <table>
@@ -927,6 +956,7 @@ The self keyword should be used instead of the current class name, should be low
 </td>
    </tr>
   </table>
+
 ## Doc Comment Alignment
 The asterisks in a doc comment should align, and there should be one space between the asterisk and tags.
   <table>
@@ -973,6 +1003,7 @@ The asterisks in a doc comment should align, and there should be one space betwe
 </td>
    </tr>
   </table>
+
 ## Doc Comment Throws Tag
 If a function throws any exceptions, they should be documented in a @throws tag.
   <table>
@@ -1006,6 +1037,7 @@ If a function throws any exceptions, they should be documented in a @throws tag.
 </td>
    </tr>
   </table>
+
 ## Static This Usage
 Static methods should not use $this.
   <table>
@@ -1038,6 +1070,7 @@ Static methods should not use $this.
 </td>
    </tr>
   </table>
+
 ## Echoed Strings
 Simple strings should not be enclosed in parentheses when being echoed.
   <table>
@@ -1058,6 +1091,7 @@ Simple strings should not be enclosed in parentheses when being echoed.
 </td>
    </tr>
   </table>
+
 ## Language Construct Whitespace
 The php constructs echo, print, return, include, include_once, require, require_once, and new should have one space after them.
   <table>
@@ -1078,6 +1112,7 @@ The php constructs echo, print, return, include, include_once, require, require_
 </td>
    </tr>
   </table>
+
 ## Semicolon Spacing
 Semicolons should not have spaces before them.
   <table>
