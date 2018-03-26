@@ -123,4 +123,6 @@
 		</properties>
 	</rule>
 	<rule ref="Squiz.WhiteSpace.SemicolonSpacing" />
+
+	<rule ref="ForwardMedia.CodeAnalysis.EmptyStatement" />
 </ruleset>
