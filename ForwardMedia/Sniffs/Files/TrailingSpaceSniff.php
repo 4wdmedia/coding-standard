@@ -34,10 +34,10 @@ class TrailingSpaceSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
 				if ($len > 0) {
 					if (trim($currentLineContent) === '') {
 						$error = 'Line contains only whitespace';
-						$phpcsFile->addError($error, ($tokenCount - 1));
+						$phpcsFile->addError($error, ($tokenCount - 1), 'OnlyWhitespace');
 					} else if (strlen(rtrim($currentLineContent)) !== $len) {
 						$error = 'Line ends with a whitespace';
-						$phpcsFile->addError($error, ($tokenCount - 1));
+						$phpcsFile->addError($error, ($tokenCount - 1), 'TralingWhitespace');
 					}
 				}
 
