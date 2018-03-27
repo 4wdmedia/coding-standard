@@ -2,6 +2,13 @@
 <ruleset name="Forward">
 	<description>PHP Coding Standard for FORWARD MEDIA</description>
 
+	<exclude-pattern>*/typo3/sysext/*</exclude-pattern>
+	<exclude-pattern>*/typo3conf/ext/crawler/*</exclude-pattern>
+	<exclude-pattern>*/typo3conf/ext/direct_mail/*</exclude-pattern>
+	<exclude-pattern>*/typo3conf/ext/gridelements/*</exclude-pattern>
+	<exclude-pattern>*/typo3conf/ext/powermail/*</exclude-pattern>
+	<exclude-pattern>*/typo3conf/ext/realurl/*</exclude-pattern>
+
 	<!-- check for usage of undefined variables -->
 	<rule ref="VariableAnalysis">
 		<!--
@@ -9,7 +16,8 @@
 			function arguments even if later defined arguments are used:
 			https://github.com/sirbrillig/phpcs-variable-analysis/issues/21
 		-->
-		<exclude name="VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable"/>
+		<exclude name="VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable" />
+		<exclude name="VariableAnalysis.CodeAnalysis.VariableAnalysis.StaticOutsideClass" />
 	</rule>
 
 	<!-- <rule ref="Generic.Arrays.DisallowLongArraySyntax" /> -->
@@ -74,8 +82,8 @@
 	<rule ref="MySource.Strings.JoinStrings" />
 
 
-	<rule ref="Pear.ControlStructures.ControlSignature" />
-	<rule ref="Pear.Functions.ValidDefaultValue" />
+	<rule ref="PEAR.ControlStructures.ControlSignature" />
+	<rule ref="PEAR.Functions.ValidDefaultValue" />
 
 
 	<rule ref="PSR1.Classes.ClassDeclaration" />
