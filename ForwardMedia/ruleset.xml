@@ -142,7 +142,11 @@
 		<exclude-pattern>*/ext_tables.php</exclude-pattern>
 		<exclude-pattern>*/AdditionalConfiguration.php</exclude-pattern>
 		<exclude-pattern>*/AdditionalConfiguration.sample.php</exclude-pattern>
-		<exclude-pattern>*/database/*.php</exclude-pattern>
+		<exclude-pattern>*/database/(clearcache.inc|clearcache|ensure-php-version|export|get-connection|import|kb-import|last-change|version-data).php</exclude-pattern>
+
+		<exclude-pattern>Configuration/Console/Commands.php</exclude-pattern>
+		<exclude-pattern>Configuration/Commands.php</exclude-pattern>
+		<exclude-pattern>Configuration/RequestMiddlewares.php</exclude-pattern>
 	</rule>
 
 
