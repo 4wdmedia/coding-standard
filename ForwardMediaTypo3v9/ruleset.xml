@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<ruleset name="Forward">
+	<description>PHP Coding Standard for FORWARD MEDIA TYPO3 v9 projects</description>
+
+	<rule ref="ForwardMediaModern" />
+
+	<rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">
+		<properties>
+			<property name="forbiddenAnnotations" type="array">
+				<element value="@author" />
+				<element value="@copyright" />
+				<element value="@license" />
+				<element value="@package" />
+				<element value="@throws" />
+				<element value="@version" />
+
+				<element value="@cascade" />
+				<element value="@ignorevalidation" />
+				<element value="@inject" />
+				<element value="@lazy" />
+				<element value="@transient" />
+				<element value="@validate" />
+			</property>
+		</properties>
+	</rule>
+</ruleset>
