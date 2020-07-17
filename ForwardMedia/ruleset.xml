@@ -26,6 +26,9 @@
 	<rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation">
 		<exclude-pattern>*/ext_emconf.php</exclude-pattern>
 	</rule>
+	<rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma">
+		<exclude-pattern>*/TCA/*.php</exclude-pattern>
+	</rule>
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax" />
 
 
@@ -153,6 +156,7 @@
 		<exclude-pattern>*/ext_tables.php</exclude-pattern>
 		<exclude-pattern>*/AdditionalConfiguration.php</exclude-pattern>
 		<exclude-pattern>*/AdditionalConfiguration.sample.php</exclude-pattern>
+		<exclude-pattern>*/AdditionalFactoryConfiguration.php</exclude-pattern>
 		<exclude-pattern>*/database/(clearcache.inc|clearcache|ensure-php-version|export|get-connection|import|kb-import|last-change|version-data).php</exclude-pattern>
 
 		<exclude-pattern>Configuration/Console/Commands.php</exclude-pattern>
@@ -215,8 +219,9 @@
 		</properties>
 	</rule>
 
-	<rule ref="VariableAnalysis.CodeAnalysis.VariableAnalysis.undefinedVariable">
+	<rule ref="VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable">
 		<severity>6</severity>
+		<exclude-pattern>*/database/*.php</exclude-pattern>
 	</rule>
 
 	<!-- <rule ref="Generic.Arrays.DisallowLongArraySyntax" /> -->
@@ -246,7 +251,9 @@
 	<!-- <rule ref="Generic.Formatting.SpaceAfterCast" /> -->
 
 	<rule ref="Generic.Functions.CallTimePassByReference" />
-	<rule ref="Generic.Functions.FunctionCallArgumentSpacing" />
+	<rule ref="Generic.Functions.FunctionCallArgumentSpacing">
+		<exclude-pattern>*/TCA/*.php</exclude-pattern>
+	</rule>
 	<rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie" />
 
 	<!-- Many TYPO3 Hooks contain underscores
@@ -265,27 +272,38 @@
 	<rule ref="Generic.PHP.DeprecatedFunctions" />
 	<rule ref="Generic.PHP.DisallowShortOpenTag" />
 	<rule ref="Generic.PHP.ForbiddenFunctions" />
-	<!-- <rule ref="Generic.PHP.LowerCaseConstant" /> -->
+	<rule ref="Generic.PHP.LowerCaseConstant" />
 	<rule ref="Generic.PHP.LowerCaseKeyword" />
+	<rule ref="Generic.PHP.LowerCaseType" />
 
 	<!-- UnnecessaryStringConcat does not check for newlines -->
 	<!-- <rule ref="Generic.Strings.UnnecessaryStringConcat" /> -->
 
 	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent" />
-<!-- 	<rule ref="Generic.WhiteSpace.ScopeIndent">
+	<rule ref="Generic.WhiteSpace.ScopeIndent">
 		<properties>
 			<property name="tabIndent" value="true" />
+			<property name="indent" value="1" />
+			<property name="exact" value="true" />
+			<property name="ignoreIndentationTokens" type="array" value="T_COMMENT,T_DOC_COMMENT_OPEN_TAG"/>
 		</properties>
 	</rule>
- -->
+
 
 	<rule ref="MySource.Objects.AssignThis" />
 	<rule ref="MySource.PHP.EvalObjectFactory" />
 	<rule ref="MySource.Strings.JoinStrings" />
 
 
-	<rule ref="PEAR.ControlStructures.ControlSignature" />
+	<rule ref="PEAR.ControlStructures.ControlSignature">
+		<exclude-pattern>*/TCA/*.php</exclude-pattern>
+	</rule>
 	<rule ref="PEAR.Functions.ValidDefaultValue" />
+	<rule ref="PEAR.WhiteSpace.ObjectOperatorIndent">
+		<properties>
+			<property name="indent" value="1"/>
+		</properties>
+	</rule>
 
 
 	<rule ref="PSR1.Classes.ClassDeclaration" />
@@ -309,6 +327,13 @@
 
 	<rule ref="Squiz.Scope.StaticThisUsage" />
 
+	<rule ref="Squiz.Strings.ConcatenationSpacing">
+		<properties>
+			<property name="spacing" value="1"/>
+			<property name="ignoreNewlines" value="true"/>
+		</properties>
+	</rule>
+
 	<rule ref="Squiz.PHP.Eval" />
 	<rule ref="Squiz.PHP.GlobalKeyword" />
 	<rule ref="Squiz.PHP.LowercasePHPFunctions" />
@@ -331,5 +356,4 @@
 			<property name="ignoreNewlines" value="1" />
 		</properties>
 	</rule>
-	<rule ref="Squiz.WhiteSpace.SemicolonSpacing" />
 </ruleset>
