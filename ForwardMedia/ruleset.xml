@@ -152,6 +152,7 @@
 
 		<!-- TCA Code should use Fully-Qualified-ClassNames -->
 		<exclude-pattern>*/Configuration/TCA/*.php</exclude-pattern>
+		<exclude-pattern>*/Configuration/FCE/*.php</exclude-pattern>
 		<exclude-pattern>*/ext_localconf.php</exclude-pattern>
 		<exclude-pattern>*/ext_tables.php</exclude-pattern>
 		<exclude-pattern>*/AdditionalConfiguration.php</exclude-pattern>
