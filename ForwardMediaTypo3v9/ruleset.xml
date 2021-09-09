@@ -23,4 +23,23 @@
 			</property>
 		</properties>
 	</rule>
+
+	<rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
+		<properties>
+			<property name="linesCountBeforeDeclare" value="0" />
+			<property name="linesCountAfterDeclare" value="1" />
+			<property name="spacesCountAroundEqualsSign" value="1" />
+		</properties>
+
+		<exclude-pattern>*/TCA/*.php</exclude-pattern>
+		<exclude-pattern>*/Configuration/FCE/*.php</exclude-pattern>
+		<exclude-pattern>*/Configuration/RequestMiddlewares.php</exclude-pattern>
+		<exclude-pattern>*/ext_localconf.php</exclude-pattern>
+		<exclude-pattern>*/ext_tables.php</exclude-pattern>
+		<exclude-pattern>*/ext_emconf.php</exclude-pattern>
+		<exclude-pattern>*/AdditionalConfiguration.php</exclude-pattern>
+		<exclude-pattern>*/AdditionalConfiguration.sample.php</exclude-pattern>
+		<exclude-pattern>*/AdditionalFactoryConfiguration.php</exclude-pattern>
+		<exclude-pattern>*/database/(clearcache.inc|clearcache|ensure-php-version|export|get-connection|import|kb-import|last-change|version-data).php</exclude-pattern>
+	</rule>
 </ruleset>

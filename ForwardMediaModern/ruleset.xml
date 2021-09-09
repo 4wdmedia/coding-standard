@@ -24,10 +24,8 @@
 
 	<rule ref="ForwardMedia" />
 
-	<rule ref="SlevomatCodingStandard.PHP" />
-
 	<!-- Throwable only exists with PHP 7 -->
-	<rule ref="SlevomatCodingStandard.Exceptions" />
+	<rule ref="SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly" />
 
 	<rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">
 		<properties>
@@ -41,4 +39,20 @@
 			</property>
 		</properties>
 	</rule>
+
+	<!-- <rule ref="SlevomatCodingStandard.Commenting.RequireOneLineDocComment">
+		<exclude-pattern>*Domain/Model/*</exclude-pattern>
+	</rule> -->
+	<rule ref="SlevomatCodingStandard.Commenting.RequireOneLinePropertyDocComment">
+		<exclude-pattern>*Domain/Model/*</exclude-pattern>
+	</rule>
+
+	<!-- <rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
+		<properties>
+			<property name="searchAnnotations" value="true" />
+		</properties>
+	</rule> -->
+
+	<!-- This rule would also report overwriten methods which cannot have a return type, because the parent class does not have a return type hint -->
+	<!-- <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint" /> -->
 </ruleset>
