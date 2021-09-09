@@ -69,7 +69,7 @@ class AlphabeticallySortedUsesSniff implements Sniff {
 			$prevLine = $useToken['line'];
 
 			$nextTokenFromUsePointer = TokenHelper::findNextEffective($phpcsFile, $usePointer + 1);
-			$type = UseStatement::TYPE_DEFAULT;
+			$type = UseStatement::TYPE_CLASS;
 			if ($tokens[$nextTokenFromUsePointer]['code'] === T_STRING) {
 				if ($tokens[$nextTokenFromUsePointer]['content'] === 'const') {
 					$type = UseStatement::TYPE_CONSTANT;
@@ -120,7 +120,7 @@ class AlphabeticallySortedUsesSniff implements Sniff {
 	protected function compareUseStatements(UseStatement $a, UseStatement $b): int {
 		if (!$a->hasSameType($b)) {
 			$order = [
-				UseStatement::TYPE_DEFAULT => 1,
+				UseStatement::TYPE_CLASS => 1,
 				UseStatement::TYPE_FUNCTION => $this->psr12Compatible ? 2 : 3,
 				UseStatement::TYPE_CONSTANT => $this->psr12Compatible ? 3 : 2,
 			];
