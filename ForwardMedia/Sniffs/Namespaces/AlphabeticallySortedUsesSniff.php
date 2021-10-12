@@ -16,6 +16,9 @@ class AlphabeticallySortedUsesSniff implements Sniff {
 
 	public const CODE_INCORRECT_ORDER = 'IncorrectlyOrderedUses';
 
+	/** @var bool */
+	public $psr12Compatible = true;
+
 	public function register(): array {
 		return [
 			T_OPEN_TAG,
