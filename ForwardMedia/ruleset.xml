@@ -22,6 +22,8 @@
  -->
 	<!-- TODO: Check https://github.com/consistence/coding-standard/blob/master/Consistence/ruleset.xml -->
 
+	<rule ref="ForwardMedia.WhiteSpace.NoLinebreakBeforeCatch" />
+
 	<rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation">
 		<exclude-pattern>*/ext_emconf.php</exclude-pattern>
 	</rule>
