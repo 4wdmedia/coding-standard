@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<ruleset name="Forward">
+	<description>PHP Coding Standard for FORWARD MEDIA PHP 8.0 projects</description>
+
+	<rule ref="ForwardMediaPHP74" />
+</ruleset>

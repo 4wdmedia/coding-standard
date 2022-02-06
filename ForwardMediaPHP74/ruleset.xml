@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<ruleset name="Forward">
+	<description>PHP Coding Standard for FORWARD MEDIA PHP 7.4 projects</description>
+
+	<rule ref="ForwardMediaTypo3v9" />
+
+	<rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
+		<exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification" />
+	</rule>
+	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint">
+		<exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification" />
+	</rule>
+
+	<rule ref="VariableAnalysis.CodeAnalysis.VariableAnalysis">
+		<severity>6</severity>
+		<!-- $_EXTKEY is pre-defined -->
+		<properties>
+			<property name="allowUnusedFunctionParameters" value="false" />
+		</properties>
+	</rule>
+</ruleset>

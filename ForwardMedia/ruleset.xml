@@ -210,20 +210,6 @@
 	-->
 	<!-- <rule ref="SlevomatCodingStandard.Variables.UselessVariable" /> -->
 
-	<rule ref="SlevomatCodingStandard.Variables.UnusedVariable">
-		<!--
-			TODO: Modify this rule to also ignore variables assigned in list():
-			`list($unused, $type) = explode(':', $string);`
-			This can be used to document, what the first part contains
-		-->
-		<properties>
-			<property name="ignoreUnusedValuesWhenOnlyKeysAreUsedInForeach" value="true" />
-		</properties>
-
-		<exclude-pattern>*/database/*.php</exclude-pattern>
-	</rule>
-
-
 	<!-- ########################################### -->
 
 
@@ -234,7 +220,6 @@
 			function arguments even if later defined arguments are used:
 			https://github.com/sirbrillig/phpcs-variable-analysis/issues/21
 		-->
-		<exclude name="VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable" />
 		<exclude name="VariableAnalysis.CodeAnalysis.VariableAnalysis.StaticOutsideClass" />
 	</rule>
 	<rule ref="VariableAnalysis.CodeAnalysis.VariableAnalysis">
@@ -242,12 +227,10 @@
 		<!-- $_EXTKEY is pre-defined -->
 		<properties>
 			<property name="validUndefinedVariableNames" value="_EXTKEY EM_CONF TYPO3_CONF_VARS" />
+			<property name="allowUndefinedVariablesInFileScope" value="true" />
+			<property name="allowUnusedVariablesInFileScope" value="true" />
+			<property name="allowUnusedFunctionParameters" value="true" />
 		</properties>
-	</rule>
-
-	<rule ref="VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable">
-		<severity>6</severity>
-		<exclude-pattern>*/database/*.php</exclude-pattern>
 	</rule>
 
 	<!-- <rule ref="Generic.Arrays.DisallowLongArraySyntax" /> -->
