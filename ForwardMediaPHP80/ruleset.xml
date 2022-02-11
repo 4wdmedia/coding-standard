@@ -3,4 +3,27 @@
 	<description>PHP Coding Standard for FORWARD MEDIA PHP 8.0 projects</description>
 
 	<rule ref="ForwardMediaPHP74" />
+
+	<rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
+		<properties>
+			<property name="enableMixedTypeHint" value="true" />
+			<property name="enableUnionTypeHint" value="true" />
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint">
+		<properties>
+			<property name="enableStaticTypeHint" value="true" />
+			<property name="enableMixedTypeHint" value="true" />
+			<property name="enableUnionTypeHint" value="true" />
+		</properties>
+	</rule>
+
+	<rule ref="SlevomatCodingStandard.TypeHints.UnionTypeHintFormat">
+		<properties>
+			<property name="enable" value="true" />
+			<property name="whiteSpaces" value="no" />
+		</properties>
+	</rule>
+
+	<rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration" />
 </ruleset>

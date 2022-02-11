@@ -6,9 +6,18 @@
 
 	<rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
 		<exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification" />
+		<properties>
+			<property name="enableMixedTypeHint" value="false" />
+			<property name="enableUnionTypeHint" value="false" />
+		</properties>
 	</rule>
 	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint">
 		<exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification" />
+		<properties>
+			<property name="enableStaticTypeHint" value="false" />
+			<property name="enableMixedTypeHint" value="false" />
+			<property name="enableUnionTypeHint" value="false" />
+		</properties>
 	</rule>
 
 	<rule ref="VariableAnalysis.CodeAnalysis.VariableAnalysis">
