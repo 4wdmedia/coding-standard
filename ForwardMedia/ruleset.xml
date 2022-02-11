@@ -210,6 +210,19 @@
 	-->
 	<!-- <rule ref="SlevomatCodingStandard.Variables.UselessVariable" /> -->
 
+	<rule ref="SlevomatCodingStandard.Variables.UnusedVariable">
+		<!--
+			TODO: Modify this rule to also ignore variables assigned in list():
+			`list($unused, $type) = explode(':', $string);`
+			This can be used to document, what the first part contains
+		-->
+		<properties>
+			<property name="ignoreUnusedValuesWhenOnlyKeysAreUsedInForeach" value="true" />
+		</properties>
+
+		<exclude-pattern>*/database/*.php</exclude-pattern>
+	</rule>
+
 	<!-- ########################################### -->
 
 
@@ -217,9 +230,9 @@
 	<rule ref="VariableAnalysis">
 		<!--
 			allow unused variables, because the linter currently warns on unused
-			function arguments even if later defined arguments are used:
-			https://github.com/sirbrillig/phpcs-variable-analysis/issues/21
+			function arguments even if they are defined in a parent class
 		-->
+		<exclude name="VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable" />
 		<exclude name="VariableAnalysis.CodeAnalysis.VariableAnalysis.StaticOutsideClass" />
 	</rule>
 	<rule ref="VariableAnalysis.CodeAnalysis.VariableAnalysis">
