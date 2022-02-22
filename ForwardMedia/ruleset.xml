@@ -2,6 +2,9 @@
 <ruleset name="Forward">
 	<description>PHP Coding Standard for FORWARD MEDIA</description>
 
+	<exclude-pattern>*.js</exclude-pattern>
+	<exclude-pattern>*.css</exclude-pattern>
+
 	<exclude-pattern>*/typo3/sysext/*</exclude-pattern>
 	<exclude-pattern>*/typo3conf/ext/crawler/*</exclude-pattern>
 	<exclude-pattern>*/typo3conf/ext/direct_mail/*</exclude-pattern>
@@ -56,6 +59,7 @@
 		<properties>
 			<property name="forbiddenCommentPatterns" type="array">
 				<element value="/^action ([^ ]+)$/" />
+				<element value="/^Auto-generated Migration: Please modify to your needs/" />
 			</property>
 		</properties>
 	</rule>
