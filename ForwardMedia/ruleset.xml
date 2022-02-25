@@ -2,8 +2,8 @@
 <ruleset name="Forward">
 	<description>PHP Coding Standard for FORWARD MEDIA</description>
 
-	<exclude-pattern>*.js</exclude-pattern>
-	<exclude-pattern>*.css</exclude-pattern>
+	<exclude-pattern>*\.js$</exclude-pattern>
+	<exclude-pattern>*\.css$</exclude-pattern>
 
 	<exclude-pattern>*/typo3/sysext/*</exclude-pattern>
 	<exclude-pattern>*/typo3conf/ext/crawler/*</exclude-pattern>
