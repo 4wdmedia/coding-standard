@@ -27,6 +27,12 @@
 
 	<rule ref="ForwardMedia.WhiteSpace.NoLinebreakBeforeCatch" />
 
+	<rule ref="SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace">
+		<properties>
+			<property name="enableEmptyArrayCheck" value="true" />
+		</properties>
+	</rule>
+
 	<rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation">
 		<exclude-pattern>*/ext_emconf.php</exclude-pattern>
 	</rule>
@@ -86,6 +92,8 @@
 			<property name="groups" type="array">
 				<!-- uses, public constants, protected constants, private constants, public properties, public static properties, protected properties, protected static properties, private properties, private static properties, constructor, static constructors, destructor, magic methods, public methods, protected methods, private methods, public final methods, public static final methods, protected final methods, protected static final methods, public abstract methods, public static abstract methods, protected abstract methods, protected static abstract methods, public static methods, protected static methods, private static methods, private methods -->
 				<element value="uses"/>
+
+				<element value="enum cases"/>
 
 				<element value="constants"/>
 
@@ -200,7 +208,7 @@
 	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing" />
 	<rule ref="SlevomatCodingStandard.TypeHints.NullTypeHintOnLastPosition" />
 	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing" />
-	<rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHintSpacing" />
+	<rule ref="SlevomatCodingStandard.Classes.PropertyDeclaration" />
 
 
 	<!-- <rule ref="SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable" /> -->
