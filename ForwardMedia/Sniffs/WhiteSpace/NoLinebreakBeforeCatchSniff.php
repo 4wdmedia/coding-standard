@@ -1,6 +1,6 @@
 <?php
 
-namespace ForwardMedia\Sniffs\Files;
+namespace ForwardMedia\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
@@ -33,4 +33,5 @@ class NoLinebreakBeforeCatchSniff implements Sniff {
 			$phpcsFile->addError('} before catch block not on the same line', $previous, 'NoLinebreakBeforeCatch');
 		}
 	}
+
 }

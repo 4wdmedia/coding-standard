@@ -26,6 +26,7 @@
 	<!-- TODO: Check https://github.com/consistence/coding-standard/blob/master/Consistence/ruleset.xml -->
 
 	<rule ref="ForwardMedia.WhiteSpace.NoLinebreakBeforeCatch" />
+	<rule ref="ForwardMedia.WhiteSpace.EmptyLinesAroundClassBraces" />
 
 	<rule ref="SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace">
 		<properties>
@@ -121,6 +122,12 @@
 	</rule>
 	<rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference" />
 	<rule ref="SlevomatCodingStandard.Classes.TraitUseDeclaration" />
+	<rule ref="SlevomatCodingStandard.Classes.TraitUseSpacing">
+		<properties>
+			<property name="linesCountBeforeFirstUseWhenFirstInClass" value="1" />
+		</properties>
+	</rule>
+
 	<!-- This only works in PHP >=7.1 -->
 	<rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility" />
 
@@ -234,6 +241,8 @@
 
 		<exclude-pattern>*/database/*.php</exclude-pattern>
 	</rule>
+
+	<!-- <rule ref="SlevomatCodingStandard.Whitespaces.DuplicateSpaces" /> -->
 
 	<!-- ########################################### -->
 

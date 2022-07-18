@@ -1,6 +1,6 @@
 <?php
 
-namespace ForwardMedia\Sniffs\Files;
+namespace ForwardMedia\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\SemicolonSpacingSniff as ParentSniff;
@@ -14,7 +14,7 @@ class SemicolonSpacingSniff extends ParentSniff {
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$prevType = $tokens[($stackPtr - 1)]['code'];
+		$prevType = $tokens[$stackPtr - 1]['code'];
 		if (isset(Tokens::$emptyTokens[$prevType]) === false) {
 			return;
 		}
@@ -30,4 +30,5 @@ class SemicolonSpacingSniff extends ParentSniff {
 
 		return parent::process($phpcsFile, $stackPtr);
 	}
+
 }
