@@ -110,7 +110,7 @@ class AlphabeticallySortedUsesSniff implements Sniff {
 				$pointer = $token['scope_closer'] + 1;
 				continue;
 			}
-			if (UseStatementHelper::isAnonymousFunctionUse($phpcsFile, $pointer)) {
+			if (UseStatementHelper::isImportUse($phpcsFile, $pointer)) {
 				$pointer++;
 				continue;
 			}
@@ -146,4 +146,5 @@ class AlphabeticallySortedUsesSniff implements Sniff {
 
 		return count($aNameParts) <=> count($bNameParts);
 	}
+
 }
