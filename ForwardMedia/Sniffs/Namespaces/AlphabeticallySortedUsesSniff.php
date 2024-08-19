@@ -110,7 +110,7 @@ class AlphabeticallySortedUsesSniff implements Sniff {
 				$pointer = $token['scope_closer'] + 1;
 				continue;
 			}
-			if (UseStatementHelper::isImportUse($phpcsFile, $pointer)) {
+			if (!UseStatementHelper::isImportUse($phpcsFile, $pointer)) {
 				$pointer++;
 				continue;
 			}
