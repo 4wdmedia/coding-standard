@@ -1,50 +1,118 @@
 <?php
+declare(strict_types = 1);
 
 namespace ForwardMedia\Sniffs\Files;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+use SlevomatCodingStandard\Helpers\CommentHelper;
+use SlevomatCodingStandard\Helpers\FixerHelper;
 use SlevomatCodingStandard\Helpers\NamespaceHelper;
+use SlevomatCodingStandard\Helpers\StringHelper;
 use SlevomatCodingStandard\Helpers\TokenHelper;
 use SlevomatCodingStandard\Helpers\UseStatement;
 use SlevomatCodingStandard\Helpers\UseStatementHelper;
+use function array_key_exists;
+use function array_map;
+use function count;
+use function end;
+use function explode;
+use function implode;
+use function in_array;
+use function min;
+use function reset;
+use function sprintf;
+use function strcasecmp;
+use function strcmp;
+use function uasort;
+use const T_COMMA;
+use const T_OPEN_TAG;
+use const T_OPEN_USE_GROUP;
+use const T_SEMICOLON;
 
-/**
- * Allow Semicolon on new line for chained methods
- */
 class AlphabeticallySortedUsesSniff implements Sniff {
 
 	public const CODE_INCORRECT_ORDER = 'IncorrectlyOrderedUses';
 
-	/** @var bool */
-	public $psr12Compatible = true;
+	public bool $psr12Compatible = true;
 
+	public bool $caseSensitive = false;
+
+	/**
+	 * @return array<int, (int|string)>
+	 */
 	public function register(): array {
 		return [
 			T_OPEN_TAG,
 		];
 	}
 
+	/**
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+	 * @param int $openTagPointer
+	 */
 	public function process(File $phpcsFile, $openTagPointer): void {
-		$useStatementGroups = $this->getUseStatementGroups($phpcsFile);
-		foreach ($useStatementGroups as $useStatements) {
+		if (TokenHelper::findPrevious($phpcsFile, T_OPEN_TAG, $openTagPointer - 1) !== null) {
+			return;
+		}
+
+		// If there are any 'use group' statements then we cannot sort and fix the file.
+		$groupUsePointer = TokenHelper::findNext($phpcsFile, T_OPEN_USE_GROUP, $openTagPointer);
+		if ($groupUsePointer !== null) {
+			return;
+		}
+
+		$tokens = $phpcsFile->getTokens();
+
+		$fileUseStatements = UseStatementHelper::getFileUseStatements($phpcsFile);
+		foreach ($fileUseStatements as $useStatements) {
 			$lastUse = null;
 			foreach ($useStatements as $useStatement) {
 				if ($lastUse === null) {
 					$lastUse = $useStatement;
 				} else {
+					$line1 = $tokens[$lastUse->getPointer()]['line'];
+					$line2 = $tokens[$useStatement->getPointer()]['line'];
+					if ($line2 > $line1 + 1) {
+						$lastUse = $useStatement;
+						continue;
+					}
 					$order = $this->compareUseStatements($useStatement, $lastUse);
 					if ($order < 0) {
-						$fix = $phpcsFile->addError(
-							sprintf('Use statements should be sorted alphabetically. The first wrong one is %s.', $useStatement->getFullyQualifiedTypeName()),
-							$useStatement->getPointer(),
-							self::CODE_INCORRECT_ORDER
-						);
-						if ($fix) {
-							// $this->fixAlphabeticalOrder($phpcsFile, $useStatements);
+						// The use statements are not ordered correctly. Go through all statements and if any are multi-part then
+						// we report the problem but cannot fix it, because this would lose the secondary parts of the statement.
+						$fixable = true;
+						$tokens = $phpcsFile->getTokens();
+						foreach ($useStatements as $statement) {
+							$nextBreaker = TokenHelper::findNext($phpcsFile, [T_SEMICOLON, T_COMMA], $statement->getPointer());
+
+							if ($tokens[$nextBreaker]['code'] === T_COMMA) {
+								$fixable = false;
+								break;
+							}
 						}
 
-						break;
+						$errorParameters = [
+							sprintf(
+								'Use statements should be sorted alphabetically. The first wrong one is %s.',
+								$useStatement->getFullyQualifiedTypeName(),
+							),
+							$useStatement->getPointer(),
+							self::CODE_INCORRECT_ORDER,
+						];
+
+						if (!$fixable) {
+							$phpcsFile->addError(...$errorParameters);
+							return;
+						}
+
+						$fix = $phpcsFile->addFixableError(...$errorParameters);
+						if ($fix) {
+							$this->fixAlphabeticalOrder($phpcsFile, $useStatements);
+						}
+
+						return;
 					}
 
 					$lastUse = $useStatement;
@@ -53,74 +121,88 @@ class AlphabeticallySortedUsesSniff implements Sniff {
 		}
 	}
 
-	protected function getUseStatementGroups(File $phpcsFile): array {
-		$useStatements = [];
+	/**
+	 * @param array<string, UseStatement> $useStatements
+	 */
+	private function fixAlphabeticalOrder(File $phpcsFile, array $useStatements): void {
+		/** @var UseStatement $firstUseStatement */
+		$firstUseStatement = reset($useStatements);
+		/** @var UseStatement $lastUseStatement */
+		$lastUseStatement = end($useStatements);
+		$lastSemicolonPointer = TokenHelper::findNext($phpcsFile, T_SEMICOLON, $lastUseStatement->getPointer());
+
+		$firstPointer = $firstUseStatement->getPointer();
+
 		$tokens = $phpcsFile->getTokens();
 
-		$namespaceAndOpenTagPointers = TokenHelper::findNextAll($phpcsFile, [T_OPEN_TAG, T_NAMESPACE], 0);
-		$openTagPointer = $namespaceAndOpenTagPointers[0];
+		$commentsBefore = [];
+		foreach ($useStatements as $useStatement) {
+			$pointerBeforeUseStatement = TokenHelper::findPreviousNonWhitespace($phpcsFile, $useStatement->getPointer() - 1);
 
-		$prevLine = -1;
-		$currentGroup = -1;
-		foreach ($this->getUseStatementPointers($phpcsFile, $openTagPointer) as $usePointer) {
-			$useToken = $tokens[$usePointer];
-
-			if ($prevLine + 1 !== $useToken['line']) {
-				$currentGroup = $useToken['line'];
-				$useStatements[$currentGroup] = [];
+			if (!in_array($tokens[$pointerBeforeUseStatement]['code'], Tokens::$commentTokens, true)) {
+				continue;
 			}
-			$prevLine = $useToken['line'];
 
-			$nextTokenFromUsePointer = TokenHelper::findNextEffective($phpcsFile, $usePointer + 1);
-			$type = UseStatement::TYPE_CLASS;
-			if ($tokens[$nextTokenFromUsePointer]['code'] === T_STRING) {
-				if ($tokens[$nextTokenFromUsePointer]['content'] === 'const') {
-					$type = UseStatement::TYPE_CONSTANT;
-				} elseif ($tokens[$nextTokenFromUsePointer]['content'] === 'function') {
-					$type = UseStatement::TYPE_FUNCTION;
-				}
+			$commentAndWhitespace = TokenHelper::getContent($phpcsFile, $pointerBeforeUseStatement, $useStatement->getPointer() - 1);
+			if (StringHelper::endsWith($commentAndWhitespace, $phpcsFile->eolChar . $phpcsFile->eolChar)) {
+				continue;
 			}
-			$name = UseStatementHelper::getNameAsReferencedInClassFromUse($phpcsFile, $usePointer);
-			$useStatement = new UseStatement(
-				$name,
-				UseStatementHelper::getFullyQualifiedTypeNameFromUse($phpcsFile, $usePointer),
-				$usePointer,
-				$type,
-				UseStatementHelper::getAlias($phpcsFile, $usePointer)
+
+			$commentStartPointer = in_array($tokens[$pointerBeforeUseStatement]['code'], TokenHelper::INLINE_COMMENT_TOKEN_CODES, true)
+				? CommentHelper::getMultilineCommentStartPointer($phpcsFile, $pointerBeforeUseStatement)
+				: $tokens[$pointerBeforeUseStatement]['comment_opener'];
+
+			$commentsBefore[$useStatement->getPointer()] = TokenHelper::getContent(
+				$phpcsFile,
+				$commentStartPointer,
+				$pointerBeforeUseStatement,
 			);
-			$useStatements[$currentGroup][UseStatement::getUniqueId($type, $name)] = $useStatement;
+
+			if ($firstPointer === $useStatement->getPointer()) {
+				$firstPointer = $commentStartPointer;
+			}
 		}
 
-		return $useStatements;
+		uasort($useStatements, fn (UseStatement $a, UseStatement $b): int => $this->compareUseStatements($a, $b));
+
+		$phpcsFile->fixer->beginChangeset();
+
+		FixerHelper::removeBetweenIncluding($phpcsFile, $firstPointer, $lastSemicolonPointer);
+
+		FixerHelper::add(
+			$phpcsFile,
+			$firstPointer,
+			implode($phpcsFile->eolChar, array_map(static function (UseStatement $useStatement) use ($phpcsFile, $commentsBefore): string {
+				$unqualifiedName = NamespaceHelper::getUnqualifiedNameFromFullyQualifiedName($useStatement->getFullyQualifiedTypeName());
+
+				$useTypeName = UseStatement::getTypeName($useStatement->getType());
+				$useTypeFormatted = $useTypeName !== null ? sprintf('%s ', $useTypeName) : '';
+
+				$commentBefore = '';
+				if (array_key_exists($useStatement->getPointer(), $commentsBefore)) {
+					$commentBefore = $commentsBefore[$useStatement->getPointer()];
+					if (!StringHelper::endsWith($commentBefore, $phpcsFile->eolChar)) {
+						$commentBefore .= $phpcsFile->eolChar;
+					}
+				}
+
+				if ($unqualifiedName === $useStatement->getNameAsReferencedInFile()) {
+					return sprintf('%suse %s%s;', $commentBefore, $useTypeFormatted, $useStatement->getFullyQualifiedTypeName());
+				}
+
+				return sprintf(
+					'%suse %s%s as %s;',
+					$commentBefore,
+					$useTypeFormatted,
+					$useStatement->getFullyQualifiedTypeName(),
+					$useStatement->getNameAsReferencedInFile(),
+				);
+			}, $useStatements)),
+		);
+		$phpcsFile->fixer->endChangeset();
 	}
 
-	protected function getUseStatementPointers(File $phpcsFile, int $openTagPointer): array {
-		$tokens = $phpcsFile->getTokens();
-		$pointer = $openTagPointer + 1;
-		$pointers = [];
-		while (true) {
-			$typesToFind = array_merge([T_USE], TokenHelper::$typeKeywordTokenCodes);
-			$pointer = TokenHelper::findNext($phpcsFile, $typesToFind, $pointer);
-			if ($pointer === null) {
-				break;
-			}
-
-			$token = $tokens[$pointer];
-			if (in_array($token['code'], TokenHelper::$typeKeywordTokenCodes, true)) {
-				$pointer = $token['scope_closer'] + 1;
-				continue;
-			}
-			if (!UseStatementHelper::isImportUse($phpcsFile, $pointer)) {
-				$pointer++;
-				continue;
-			}
-			$pointers[] = $pointer;
-			$pointer++;
-		}
-		return $pointers;
-	}
-
-	protected function compareUseStatements(UseStatement $a, UseStatement $b): int {
+	private function compareUseStatements(UseStatement $a, UseStatement $b): int {
 		if (!$a->hasSameType($b)) {
 			$order = [
 				UseStatement::TYPE_CLASS => 1,
@@ -136,7 +218,7 @@ class AlphabeticallySortedUsesSniff implements Sniff {
 
 		$minPartsCount = min(count($aNameParts), count($bNameParts));
 		for ($i = 0; $i < $minPartsCount; $i++) {
-			$comparison = strcasecmp($aNameParts[$i], $bNameParts[$i]);
+			$comparison = $this->compare($aNameParts[$i], $bNameParts[$i]);
 			if ($comparison === 0) {
 				continue;
 			}
@@ -145,6 +227,14 @@ class AlphabeticallySortedUsesSniff implements Sniff {
 		}
 
 		return count($aNameParts) <=> count($bNameParts);
+	}
+
+	private function compare(string $a, string $b): int {
+		if ($this->caseSensitive) {
+			return strcmp($a, $b);
+		}
+
+		return strcasecmp($a, $b);
 	}
 
 }
