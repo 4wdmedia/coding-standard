@@ -21,6 +21,8 @@
 		<exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification" />
 	</rule>
 
+	<rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue" />
+
 	<rule ref="SlevomatCodingStandard.TypeHints.UnionTypeHintFormat">
 		<properties>
 			<property name="enable" value="true" />
